@@ -27,7 +27,8 @@ function App() {
 
  const onLoginClick = async () => {
    setIsLoading(true);
-  
+    setErrorMessage('');
+
   try {
     let ret = await login({email,password});
     setErrorMessage('');
@@ -44,12 +45,6 @@ function App() {
 
  }
 
- const checkFields = () => {
-     return !(email.length > 0 && password.length >= 6);
- }
-
- checkFields();
-
 
   return (
     <div className='wrapper'>
@@ -58,16 +53,16 @@ function App() {
         {/* Coloque a mensagem de erro de login na div abaixo. Mostre a div somente se houver uma mensagem de erro. */}
         {errorMessage&&<div className='errorMessage'>{errorMessage}</div>}
         <div className='row'>
-          <label htmlFor={'email'}>Email</label>
-          <input id={'email'} type={'email'} autoComplete='off' value={email} onChange={(event)=>setEmail(event.target.value)}/>
+          <label htmlFor={'email'}>Email:</label>
+          <input id={'email'} type={'email'} placeholder="Informe o seu email" autoComplete='off' value={email} onChange={(event)=>setEmail(event.target.value)}/>
         </div>
         <div className='row'>
-          <label htmlFor={'password'}>Password</label>
-          <input id={'password'} type={'password'} value={password} onChange={(event)=>setPassword(event.target.value)}/>
+          <label htmlFor={'password'}>Password:</label>
+          <input id={'password'} placeholder="Informe a sua senha" type={'password'} value={password} onChange={(event)=>setPassword(event.target.value)}/>
         </div>
 
         <div className='button'>
-          <button onClick={onLoginClick} disabled={checkFields()||isLoading}>Login</button>
+          <button onClick={onLoginClick} disabled={email.length===0 || password.length<6 || isLoading}>Login</button>
         </div>
       </div>
     </div>
